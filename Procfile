@@ -1,0 +1,1 @@
+echo "web: golang-backend-pos" > Procfile

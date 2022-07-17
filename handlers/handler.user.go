@@ -102,7 +102,7 @@ func (h *handlerUser) HandlerLogin(ctx *gin.Context) {
 		return
 	}
 	accessToken, errorJwt := pkg.Sign(&schemas.JWtMetaRequest{
-		Data:      gin.H{"id": res.User_id, "email": res.User_email},
+		Data:      gin.H{"user_id": res.User_id, "user_email": res.User_email},
 		SecretKey: pkg.GodotEnv("JWT_SECRET_KEY"),
 		Options:   schemas.JwtMetaOptions{Audience: "majoo", ExpiredAt: 1},
 	})
@@ -131,42 +131,42 @@ func ValidatorUser(ctx *gin.Context, input schemas.SchemaUser, Type string) (int
 			Options: []gpc.ErrorMetaConfig{
 				gpc.ErrorMetaConfig{
 					Tag:     "required",
-					Field:   "FirstName",
-					Message: "FirstName is required on body",
+					Field:   "User_first_name",
+					Message: "User_first_name is required on body",
 				},
 				gpc.ErrorMetaConfig{
 					Tag:     "lowercase",
-					Field:   "FirstName",
-					Message: "FirstName must be lowercase",
+					Field:   "User_first_name",
+					Message: "User_first_name must be lowercase",
 				},
 				gpc.ErrorMetaConfig{
 					Tag:     "required",
-					Field:   "LastName",
-					Message: "LastName is required on body",
+					Field:   "User_last_name",
+					Message: "User_last_name is required on body",
 				},
 				gpc.ErrorMetaConfig{
 					Tag:     "lowercase",
-					Field:   "LastName",
-					Message: "LastName must be lowercase",
+					Field:   "User_last_name",
+					Message: "User_last_name must be lowercase",
 				},
 				gpc.ErrorMetaConfig{
 					Tag:     "required",
-					Field:   "Email",
+					Field:   "User_email",
 					Message: "Email is required on body",
 				},
 				gpc.ErrorMetaConfig{
 					Tag:     "email",
-					Field:   "Email",
+					Field:   "User_email",
 					Message: "Email format is not valid",
 				},
 				gpc.ErrorMetaConfig{
 					Tag:     "password",
-					Field:   "Password",
+					Field:   "User_password",
 					Message: "Password is required on body",
 				},
 				gpc.ErrorMetaConfig{
 					Tag:     "gte",
-					Field:   "Password",
+					Field:   "User_password",
 					Message: "Password must be greater than equal 8 character",
 				},
 			},
@@ -178,18 +178,18 @@ func ValidatorUser(ctx *gin.Context, input schemas.SchemaUser, Type string) (int
 			Options: []gpc.ErrorMetaConfig{
 				gpc.ErrorMetaConfig{
 					Tag:     "required",
-					Field:   "Email",
+					Field:   "User_email",
 					Message: "Email is required on body",
 				},
 				gpc.ErrorMetaConfig{
 					Tag:     "email",
-					Field:   "Email",
+					Field:   "User_email",
 					Message: "Email format is not valid",
 				},
 				gpc.ErrorMetaConfig{
 					Tag:     "required",
-					Field:   "Password",
-					Message: "Password is required on body",
+					Field:   "User_password",
+					Message: "User_password is required on body",
 				},
 			},
 		}
