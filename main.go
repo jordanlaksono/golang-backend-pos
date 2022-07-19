@@ -9,6 +9,8 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 
+	"fmt"
+
 	helmet "github.com/danielkov/gin-helmet"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/gzip"
@@ -54,7 +56,13 @@ func main() {
 
 func setupDatabase() *gorm.DB {
 
-	dsn := "host=ec2-44-198-82-71.compute-1.amazonaws.com user=ppfcnvllhxwfid password=0a98c6cef037ff00ea7f9652a0ebf919dcd499da113ce156c54212a1866f2c25 dbname=d81rgju225tjj5 port=5432 sslmode=require TimeZone=Asia/Shanghai"
+	dbUser := pkg.GodotEnv("DB_USER")
+	dbPass := pkg.GodotEnv("DB_PASSWORD")
+	dbHost := pkg.GodotEnv("DB_HOST")
+	dbName := pkg.GodotEnv("DB_NAME")
+	dbPort := pkg.GodotEnv("DB_PORT")
+
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=require TimeZone=Asia/Shanghai", dbHost, dbUser, dbPass, dbName, dbPort)
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
