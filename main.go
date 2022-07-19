@@ -3,13 +3,13 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/jordanlaksono/golang-backend-pos.git/models"
-	"github.com/jordanlaksono/golang-backend-pos.git/pkg"
 	"github.com/jordanlaksono/golang-backend-pos.git/routes"
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 
 	"fmt"
+	"os"
 
 	helmet "github.com/danielkov/gin-helmet"
 	"github.com/gin-contrib/cors"
@@ -40,7 +40,7 @@ func main() {
 	* ========================
 	 */
 
-	err := app.Run(":" + pkg.GodotEnv("PORT"))
+	err := app.Run(":" + os.Getenv("PORT"))
 
 	if err != nil {
 		defer logrus.Error("Server is not running ")
@@ -56,11 +56,11 @@ func main() {
 
 func setupDatabase() *gorm.DB {
 
-	dbUser := pkg.GodotEnv("DB_USER")
-	dbPass := pkg.GodotEnv("DB_PASSWORD")
-	dbHost := pkg.GodotEnv("DB_HOST")
-	dbName := pkg.GodotEnv("DB_NAME")
-	dbPort := pkg.GodotEnv("DB_PORT")
+	dbUser := os.Getenv("DB_USER")
+	dbPass := os.Getenv("DB_PASSWORD")
+	dbHost := os.Getenv("DB_HOST")
+	dbName := os.Getenv("DB_NAME")
+	dbPort := os.Getenv("DB_PORT")
 
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=require TimeZone=Asia/Shanghai", dbHost, dbUser, dbPass, dbName, dbPort)
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
@@ -95,11 +95,11 @@ func setupApp() *gin.Engine {
 
 	app := gin.Default()
 
-	if pkg.GodotEnv("GO_ENV") != "development" {
-		gin.SetMode(gin.ReleaseMode)
-	} else {
-		gin.SetMode(gin.DebugMode)
-	}
+	// if pkg.GodotEnv("GO_ENV") != "development" {
+	// 	gin.SetMode(gin.ReleaseMode)
+	// } else {
+	gin.SetMode(gin.DebugMode)
+	//}
 
 	// Initialize all middleware here
 	app.Use(helmet.Default())
