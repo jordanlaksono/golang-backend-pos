@@ -40,7 +40,7 @@ func main() {
 	* ========================
 	 */
 
-	err := app.Run(":" + pkg.GodotEnv("PORT"))
+	err := app.Run()
 
 	if err != nil {
 		defer logrus.Error("Server is not running ")
