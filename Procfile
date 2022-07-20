@@ -1,1 +1,1 @@
-web: golang-backend-pos
+web: bin/golang-backend-pos
