@@ -125,7 +125,7 @@ func (h *handlerUser) HandlerLogin(ctx *gin.Context) {
 		return
 	}
 
-	helpers.APIResponse(ctx, "Login successfuly", http.StatusOK, gin.H{"accessToken": accessToken, "expiredAt": expiredAt, "parse": resUser})
+	helpers.APIResponse(ctx, "Login successfuly", http.StatusOK, gin.H{"accessToken": accessToken, "expiredAt": expiredAt, "user": resUser})
 }
 
 func (h *handlerUser) HandlerResult(ctx *gin.Context) {
