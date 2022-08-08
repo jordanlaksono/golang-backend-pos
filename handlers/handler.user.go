@@ -108,13 +108,14 @@ func (h *handlerUser) HandlerLogin(ctx *gin.Context) {
 	})
 
 	expiredAt := time.Now().Add(time.Duration(time.Minute) * (24 * 60) * 1).Local()
+	parseUser := h.user.EntityRegister(&body)
 
 	if errorJwt != nil {
 		helpers.APIResponse(ctx, "Generate access token failed", http.StatusBadRequest, nil)
 		return
 	}
 
-	helpers.APIResponse(ctx, "Login successfuly", http.StatusOK, gin.H{"accessToken": accessToken, "expiredAt": expiredAt})
+	helpers.APIResponse(ctx, "Login successfuly", http.StatusOK, gin.H{"accessToken": accessToken, "expiredAt": expiredAt, "parse": parseUser})
 }
 
 /**
