@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -29,6 +30,10 @@ func NewHandlerUser(user entitys.EntityUser) *handlerUser {
 
 func (h *handlerUser) HandlerPing(ctx *gin.Context) {
 	helpers.APIResponse(ctx, "Ping User", http.StatusOK, nil)
+}
+
+func (h *handlerUser) HandlerTest(ctx *gin.Context) {
+	helpers.APIResponse(ctx, "Ping Test", http.StatusOK, nil)
 }
 
 /**
@@ -108,14 +113,42 @@ func (h *handlerUser) HandlerLogin(ctx *gin.Context) {
 	})
 
 	expiredAt := time.Now().Add(time.Duration(time.Minute) * (24 * 60) * 1).Local()
-	parseUser := h.user.EntityRegister(&body)
+	resUser, error := h.user.EntityResult(&body)
+
+	if error.Type == "error_result_01" {
+		helpers.APIResponse(ctx, fmt.Sprintf("User data not found "), error.Code, nil)
+		return
+	}
 
 	if errorJwt != nil {
 		helpers.APIResponse(ctx, "Generate access token failed", http.StatusBadRequest, nil)
 		return
 	}
 
-	helpers.APIResponse(ctx, "Login successfuly", http.StatusOK, gin.H{"accessToken": accessToken, "expiredAt": expiredAt, "parse": parseUser})
+	helpers.APIResponse(ctx, "Login successfuly", http.StatusOK, gin.H{"accessToken": accessToken, "expiredAt": expiredAt, "parse": resUser})
+}
+
+func (h *handlerUser) HandlerResult(ctx *gin.Context) {
+	var body schemas.SchemaUser
+	id := ctx.Param("id")
+	body.User_id = id
+
+	errors, code := ValidatorUser(ctx, body, "result")
+
+	if code > 0 {
+		helpers.ErrorResponse(ctx, errors)
+		return
+	}
+
+	res, error := h.user.EntityResult(&body)
+
+	if error.Type == "error_result_01" {
+		helpers.APIResponse(ctx, fmt.Sprintf("User data not found for this id %s ", id), error.Code, nil)
+		return
+	}
+
+	helpers.APIResponse(ctx, "User data already to use", http.StatusOK, res)
+
 }
 
 /**

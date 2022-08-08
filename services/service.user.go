@@ -35,3 +35,11 @@ func (s *serviceUser) EntityLogin(input *schemas.SchemaUser) (*models.User, sche
 	res, err := s.user.EntityLogin(&schema)
 	return res, err
 }
+
+func (s *serviceUser) EntityResult(input *schemas.SchemaUser) (*models.User, schemas.SchemaDatabaseError) {
+	var user schemas.SchemaUser
+	user.User_id = input.User_id
+
+	res, err := s.user.EntityResult(&user)
+	return res, err
+}

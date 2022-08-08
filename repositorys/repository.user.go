@@ -98,3 +98,25 @@ func (r *repositoryUser) EntityLogin(input *schemas.SchemaUser) (*models.User, s
 	err <- schemas.SchemaDatabaseError{}
 	return &user, <-err
 }
+
+func (r *repositoryUser) EntityResult(input *schemas.SchemaUser) (*models.User, schemas.SchemaDatabaseError) {
+	var user models.User
+	user.User_id = input.User_id
+
+	err := make(chan schemas.SchemaDatabaseError, 1)
+
+	db := r.db.Model(&user)
+
+	checkUserId := db.Debug().First(&user)
+
+	if checkUserId.RowsAffected < 1 {
+		err <- schemas.SchemaDatabaseError{
+			Code: http.StatusNotFound,
+			Type: "error_result_01",
+		}
+		return &user, <-err
+	}
+
+	err <- schemas.SchemaDatabaseError{}
+	return &user, <-err
+}

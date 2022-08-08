@@ -8,4 +8,5 @@ import (
 type EntityUser interface {
 	EntityRegister(input *schemas.SchemaUser) (*models.User, schemas.SchemaDatabaseError)
 	EntityLogin(input *schemas.SchemaUser) (*models.User, schemas.SchemaDatabaseError)
+	EntityResult(input *schemas.SchemaUser) (*models.User, schemas.SchemaDatabaseError)
 }

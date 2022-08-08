@@ -1,14 +1,13 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/jordanlaksono/golang-backend-pos.git/models"
 	"github.com/jordanlaksono/golang-backend-pos.git/routes"
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-
-	"fmt"
 	"os"
 
 	helmet "github.com/danielkov/gin-helmet"
@@ -41,6 +40,7 @@ func main() {
 	 */
 
 	err := app.Run(":" + os.Getenv("PORT"))
+	//err := app.Run(":8080")
 
 	if err != nil {
 		defer logrus.Error("Server is not running ")
@@ -62,7 +62,7 @@ func setupDatabase() *gorm.DB {
 	dbName := os.Getenv("DB_NAME")
 	dbPort := os.Getenv("DB_PORT")
 
-	// dsn := "host=localhost user=postgres password=aero1996 dbname=ark_weekone port=5432 sslmode=disable TimeZone=Asia/Shanghai"
+	//dsn := "host=localhost user=postgres password=aero1996 dbname=ark_weekone port=5432 sslmode=disable TimeZone=Asia/Shanghai"
 	dsn := fmt.Sprintf("host=%s user=%s password=%s port=%s dbname=%s sslmode=require TimeZone=Asia/Shanghai", dbHost, dbUser, dbPass, dbPort, dbName)
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
