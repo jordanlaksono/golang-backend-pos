@@ -32,7 +32,7 @@ func main() {
 	 */
 
 	routes.NewRouteUser(db, app)
-
+	routes.NewRouteRole(db, app)
 	/**
 	* ========================
 	*  Listening Server Port
