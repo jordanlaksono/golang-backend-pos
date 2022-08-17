@@ -52,7 +52,7 @@ func ValidatorMenuRole(ctx *gin.Context, input schemas.SchemaMenuRole, Type stri
 		Options: []gpc.ErrorMetaConfig{
 			gpc.ErrorMetaConfig{
 				Tag:     "required",
-				Field:   "Menu_id",
+				Field:   "MenuID",
 				Message: "Menu id is required on body",
 			},
 			gpc.ErrorMetaConfig{

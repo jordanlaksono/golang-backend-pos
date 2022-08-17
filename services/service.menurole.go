@@ -16,7 +16,7 @@ func NewServiceMenuRole(menurole entitys.EntityMenuRole) *serviceMenuRole {
 
 func (s *serviceMenuRole) EntityInsert(input *schemas.SchemaMenuRole) (*models.MenuRole, schemas.SchemaDatabaseError) {
 	var schema schemas.SchemaMenuRole
-	schema.Menu_id = input.Menu_id
+	schema.MenuID = input.MenuID
 	schema.Role_id = input.Role_id
 
 	res, err := s.menurole.EntityInsert(&schema)

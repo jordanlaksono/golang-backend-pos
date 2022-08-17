@@ -21,7 +21,7 @@ func (r *repositoryMenuRole) EntityInsert(input *schemas.SchemaMenuRole) (*model
 	var menurole models.MenuRole
 
 	menurole.Menu_role_id = input.Menu_role_id
-	menurole.Menu_id = input.Menu_id
+	menurole.MenuID = input.MenuID
 	menurole.Role_id = input.Role_id
 
 	err := make(chan schemas.SchemaDatabaseError, 1)

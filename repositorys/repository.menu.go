@@ -20,7 +20,7 @@ func NewRepositoryMenu(db *gorm.DB) *repositoryMenu {
 func (r *repositoryMenu) EntityInsert(input *schemas.SchemaMenu) (*models.Menu, schemas.SchemaDatabaseError) {
 	var menu models.Menu
 
-	menu.Menu_id = input.Menu_id
+	menu.ID = input.Menu_id
 	menu.Menu_nama = input.Menu_nama
 	menu.Menu_link = input.Menu_link
 
