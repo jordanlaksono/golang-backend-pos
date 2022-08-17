@@ -7,4 +7,5 @@ import (
 
 type EntityMenuRole interface {
 	EntityInsert(input *schemas.SchemaMenuRole) (*models.MenuRole, schemas.SchemaDatabaseError)
+	EntityResults() (*[]models.MenuRole, schemas.SchemaDatabaseError)
 }

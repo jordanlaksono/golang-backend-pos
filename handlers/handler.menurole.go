@@ -66,3 +66,14 @@ func ValidatorMenuRole(ctx *gin.Context, input schemas.SchemaMenuRole, Type stri
 	err, code := pkg.GoValidator(&input, schema.Options)
 	return err, code
 }
+
+func (h *handlerMenuRole) HandlerResults(ctx *gin.Context) {
+	res, error := h.menurole.EntityResults()
+
+	if error.Type == "error_results_01" {
+		helpers.APIResponse(ctx, "Menu Role data not found", error.Code, nil)
+		return
+	}
+
+	helpers.APIResponse(ctx, "Menu Role data already to use", http.StatusOK, res)
+}

@@ -17,4 +17,5 @@ func NewRouteMenuRole(db *gorm.DB, router *gin.Engine) {
 	route := router.Group("/api/v1/menurole")
 
 	route.POST("/store", handlerMenuRole.HandlerInsert)
+	route.GET("/results", handlerMenuRole.HandlerResults)
 }
