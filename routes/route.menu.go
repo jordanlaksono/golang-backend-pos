@@ -17,4 +17,5 @@ func NewRouteMenu(db *gorm.DB, router *gin.Engine) {
 	route := router.Group("/api/v1/menu")
 
 	route.POST("/store", handlerMenu.HandlerInsert)
+	route.GET("/results", handlerMenu.HandlerResults)
 }

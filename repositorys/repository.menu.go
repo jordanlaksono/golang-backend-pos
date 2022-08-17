@@ -41,3 +41,24 @@ func (r *repositoryMenu) EntityInsert(input *schemas.SchemaMenu) (*models.Menu, 
 	err <- schemas.SchemaDatabaseError{}
 	return &menu, <-err
 }
+
+func (r *repositoryMenu) EntityResults() (*[]models.Menu, schemas.SchemaDatabaseError) {
+	var menu []models.Menu
+
+	err := make(chan schemas.SchemaDatabaseError, 1)
+
+	db := r.db.Model(&menu)
+
+	checkMenuRole := db.Debug().Find(&menu)
+
+	if checkMenuRole.RowsAffected < 1 {
+		err <- schemas.SchemaDatabaseError{
+			Code: http.StatusNotFound,
+			Type: "error_results_01",
+		}
+		return &menu, <-err
+	}
+
+	err <- schemas.SchemaDatabaseError{}
+	return &menu, <-err
+}

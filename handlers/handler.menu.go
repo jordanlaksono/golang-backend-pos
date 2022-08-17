@@ -45,6 +45,17 @@ func (h *handlerMenu) HandlerInsert(ctx *gin.Context) {
 	helpers.APIResponse(ctx, "Insert new menu success", http.StatusOK, nil)
 }
 
+func (h *handlerMenu) HandlerResults(ctx *gin.Context) {
+	res, error := h.menu.EntityResults()
+
+	if error.Type == "error_results_01" {
+		helpers.APIResponse(ctx, "Menu data not found", error.Code, nil)
+		return
+	}
+
+	helpers.APIResponse(ctx, "Menu data already to use", http.StatusOK, res)
+}
+
 func ValidatorMenu(ctx *gin.Context, input schemas.SchemaMenu, Type string) (interface{}, int) {
 	var schema gpc.ErrorConfig
 

@@ -22,3 +22,8 @@ func (s *serviceMenu) EntityInsert(input *schemas.SchemaMenu) (*models.Menu, sch
 	res, err := s.menu.EntityInsert(&schema)
 	return res, err
 }
+
+func (s *serviceMenu) EntityResults() (*[]models.Menu, schemas.SchemaDatabaseError) {
+	res, err := s.menu.EntityResults()
+	return res, err
+}

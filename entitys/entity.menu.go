@@ -7,4 +7,5 @@ import (
 
 type EntityMenu interface {
 	EntityInsert(input *schemas.SchemaMenu) (*models.Menu, schemas.SchemaDatabaseError)
+	EntityResults() (*[]models.Menu, schemas.SchemaDatabaseError)
 }
