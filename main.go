@@ -2,6 +2,9 @@ package main
 
 import (
 	"fmt"
+	helmet "github.com/danielkov/gin-helmet"
+	"github.com/gin-contrib/cors"
+	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
 	"github.com/jordanlaksono/golang-backend-pos.git/models"
 	"github.com/jordanlaksono/golang-backend-pos.git/routes"
@@ -9,10 +12,6 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"os"
-
-	helmet "github.com/danielkov/gin-helmet"
-	"github.com/gin-contrib/cors"
-	"github.com/gin-contrib/gzip"
 )
 
 func main() {

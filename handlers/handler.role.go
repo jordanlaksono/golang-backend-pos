@@ -38,6 +38,7 @@ func (h *handlerRole) HandlerInsert(ctx *gin.Context) {
 
 	if error.Type == "error_register_02" {
 		helpers.APIResponse(ctx, "Insert new role failed", error.Code, nil)
+
 		return
 	}
 

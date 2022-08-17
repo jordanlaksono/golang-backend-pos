@@ -27,7 +27,7 @@ func (r *repositoryRole) EntityInsert(input *schemas.SchemaRole) (*models.Role, 
 	db := r.db.Model(&role)
 
 	addNewRole := db.Debug().Create(&role).Commit()
-
+	
 	if addNewRole.RowsAffected < 1 {
 		err <- schemas.SchemaDatabaseError{
 			Code: http.StatusForbidden,
