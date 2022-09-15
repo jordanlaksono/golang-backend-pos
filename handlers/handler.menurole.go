@@ -75,5 +75,5 @@ func (h *handlerMenuRole) HandlerResults(ctx *gin.Context) {
 		return
 	}
 
-	helpers.APIResponse(ctx, "Menu Role data already to use", http.StatusOK, res)
+	helpers.APIResponse(ctx, "Menu data already to use", http.StatusOK, res)
 }

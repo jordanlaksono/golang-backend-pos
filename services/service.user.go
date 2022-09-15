@@ -16,9 +16,7 @@ func NewServiceUser(user entitys.EntityUser) *serviceUser {
 
 func (s *serviceUser) EntityRegister(input *schemas.SchemaUser) (*models.User, schemas.SchemaDatabaseError) {
 	var schema schemas.SchemaUser
-	schema.User_first_name = input.User_first_name
-	schema.User_last_name = input.User_last_name
-	schema.User_email = input.User_email
+	schema.User_username = input.User_username
 	schema.User_password = input.User_password
 
 	res, err := s.user.EntityRegister(&schema)
@@ -29,7 +27,7 @@ func (s *serviceUser) EntityLogin(input *schemas.SchemaUser) (*models.User, sche
 
 	var schema schemas.SchemaUser
 
-	schema.User_email = input.User_email
+	schema.User_username = input.User_username
 	schema.User_password = input.User_password
 
 	res, err := s.user.EntityLogin(&schema)
@@ -41,5 +39,18 @@ func (s *serviceUser) EntityResult(input *schemas.SchemaUser) (*models.User, sch
 	user.User_id = input.User_id
 
 	res, err := s.user.EntityResult(&user)
+	return res, err
+}
+
+func (s *serviceUser) EntityResultMenuByUser(input *schemas.SchemaUser) (*[]models.MenuRole, schemas.SchemaDatabaseError) {
+	var user schemas.SchemaUser
+	user.User_id = input.User_id
+
+	res, err := s.user.EntityResultMenuByUser(&user)
+	return res, err
+}
+
+func (s *serviceUser) EntityResults() (*[]models.User, schemas.SchemaDatabaseError) {
+	res, err := s.user.EntityResults()
 	return res, err
 }

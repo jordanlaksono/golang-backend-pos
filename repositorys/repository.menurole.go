@@ -55,7 +55,7 @@ func (r *repositoryMenuRole) EntityResults() (*[]models.MenuRole, schemas.Schema
 
 	db := r.db.Model(&menurole)
 
-	checkMenuRole := db.Debug().Find(&menurole)
+	checkMenuRole := db.Raw("SELECT * FROM v_menu_roles ").Scan(&menurole)
 
 	if checkMenuRole.RowsAffected < 1 {
 		err <- schemas.SchemaDatabaseError{

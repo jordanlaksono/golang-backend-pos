@@ -81,6 +81,7 @@ func (h *handlerUser) HandlerRegister(ctx *gin.Context) {
 
 func (h *handlerUser) HandlerLogin(ctx *gin.Context) {
 	var body schemas.SchemaUser
+
 	err := ctx.ShouldBindJSON(&body)
 
 	if err != nil {
@@ -107,7 +108,7 @@ func (h *handlerUser) HandlerLogin(ctx *gin.Context) {
 		return
 	}
 	accessToken, errorJwt := pkg.Sign(&schemas.JWtMetaRequest{
-		Data:      gin.H{"user_id": res.User_id, "user_email": res.User_email},
+		Data:      gin.H{"user_id": res.User_id, "user_username": res.User_username},
 		SecretKey: pkg.GodotEnv("JWT_SECRET_KEY"),
 		Options:   schemas.JwtMetaOptions{Audience: "majoo", ExpiredAt: 1},
 	})
@@ -119,13 +120,19 @@ func (h *handlerUser) HandlerLogin(ctx *gin.Context) {
 		helpers.APIResponse(ctx, fmt.Sprintf("User data not found "), error.Code, nil)
 		return
 	}
+	body.User_id = res.User_id
+	resUserMenu, error := h.user.EntityResultMenuByUser(&body)
+	if error.Type == "error_result_01" {
+		helpers.APIResponse(ctx, fmt.Sprintf("Menu User data not found "), error.Code, nil)
+		return
+	}
 
 	if errorJwt != nil {
 		helpers.APIResponse(ctx, "Generate access token failed", http.StatusBadRequest, nil)
 		return
 	}
 
-	helpers.APIResponse(ctx, "Login successfuly", http.StatusOK, gin.H{"accessToken": accessToken, "expiredAt": expiredAt, "user": resUser})
+	helpers.APIResponse(ctx, "Login successfuly", http.StatusOK, gin.H{"accessToken": accessToken, "expiredAt": expiredAt, "user": resUser, "menu": resUserMenu})
 }
 
 func (h *handlerUser) HandlerResult(ctx *gin.Context) {
@@ -149,6 +156,17 @@ func (h *handlerUser) HandlerResult(ctx *gin.Context) {
 
 	helpers.APIResponse(ctx, "User data already to use", http.StatusOK, res)
 
+}
+
+func (h *handlerUser) HandlerResults(ctx *gin.Context) {
+	res, error := h.user.EntityResults()
+
+	if error.Type == "error_results_01" {
+		helpers.APIResponse(ctx, "User data not found", error.Code, nil)
+		return
+	}
+
+	helpers.APIResponse(ctx, "User data already to use", http.StatusOK, res)
 }
 
 /**

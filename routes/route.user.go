@@ -18,6 +18,7 @@ func NewRouteUser(db *gorm.DB, router *gin.Engine) {
 
 	route.GET("/ping", handlerUser.HandlerPing)
 	route.GET("/test", handlerUser.HandlerTest)
+	route.GET("/results", handlerUser.HandlerResults)
 	route.GET("/result/:id", handlerUser.HandlerResult)
 	route.POST("/register", handlerUser.HandlerRegister)
 	route.POST("/login", handlerUser.HandlerLogin)

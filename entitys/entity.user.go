@@ -9,4 +9,6 @@ type EntityUser interface {
 	EntityRegister(input *schemas.SchemaUser) (*models.User, schemas.SchemaDatabaseError)
 	EntityLogin(input *schemas.SchemaUser) (*models.User, schemas.SchemaDatabaseError)
 	EntityResult(input *schemas.SchemaUser) (*models.User, schemas.SchemaDatabaseError)
+	EntityResults() (*[]models.User, schemas.SchemaDatabaseError)
+	EntityResultMenuByUser(input *schemas.SchemaUser) (*[]models.MenuRole, schemas.SchemaDatabaseError)
 }
